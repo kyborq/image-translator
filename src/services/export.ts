@@ -15,13 +15,9 @@ function typedArrayToBuffer(array: Uint8Array) {
 
 function exportTypeToBlobType(type: string) {
   switch (type) {
-    case "PDF":
-      return "application/pdf";
-    case "SVG":
-      return "image/svg+xml";
-    case "PNG":
+    case "png":
       return "image/png";
-    case "JPG":
+    case "jpg":
       return "image/jpeg";
     default:
       return "image/png";
@@ -30,13 +26,9 @@ function exportTypeToBlobType(type: string) {
 
 function exportTypeToFileExtension(type: string) {
   switch (type) {
-    case "PDF":
-      return ".pdf";
-    case "SVG":
-      return ".svg";
-    case "PNG":
+    case "png":
       return ".png";
-    case "JPG":
+    case "jpg":
       return ".jpg";
     default:
       return ".png";
@@ -51,8 +43,11 @@ export async function exportZip(format: string, exportableBytes: Export[]) {
 
     const cleanBytes = typedArrayToBuffer(bytes);
 
-    let blob = new Blob([cleanBytes], { type: "image/png" });
-    zip.file(`${name}.png`, blob, {
+    const bType = exportTypeToBlobType(format);
+    const ext = exportTypeToFileExtension(format);
+
+    let blob = new Blob([cleanBytes], { type: bType });
+    zip.file(`${name}${ext}`, blob, {
       base64: true,
     });
   }

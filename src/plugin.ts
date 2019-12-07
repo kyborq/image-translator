@@ -12,7 +12,7 @@ import {
   PluginActionTypes,
 } from "./types";
 
-figma.showUI(__html__, { width: 300, height: 100 });
+figma.showUI(__html__, { width: 300, height: 158 });
 
 const translated: IIterableFrame = {};
 
@@ -79,7 +79,9 @@ function startTranslation() {
   });
 }
 
-async function startExport() {
+type TExport = "JPG" | "PNG" | "SVG" | "PDF";
+
+async function startExport(format: string) {
   let exportableBytes = [];
   const keys = Object.keys(translated);
 
@@ -90,7 +92,7 @@ async function startExport() {
     if (current.exportSettings.length === 0) {
       current.exportSettings = [
         {
-          format: "PNG",
+          format: format.toUpperCase() as TExport,
           suffix: "",
           constraint: { type: "SCALE", value: 1 },
           contentsOnly: true,
@@ -111,7 +113,7 @@ async function startExport() {
 
   postMessage({
     type: PluginActionTypes.EXPORT,
-    payload: { exportableBytes },
+    payload: { exportableBytes, format },
   });
 }
 
@@ -129,7 +131,7 @@ figma.ui.onmessage = function ({ type, payload }: UIAction): void {
       break;
 
     case UIActionTypes.EXPORT:
-      startExport();
+      startExport(payload);
       break;
 
     case UIActionTypes.CLOSE:

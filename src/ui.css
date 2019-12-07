@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  padding: 13px;
+}
+
 /* Variables */
 :root {
   --spacing: 8px;
@@ -37,7 +42,7 @@ body {
 }
 
 /* Layout */
-.container {
+.wrap {
   font-size: 12px;
   flex: 1;
   display: flex;
@@ -52,7 +57,7 @@ body {
   flex: 1;
 }
 
-.container > * + * {
+.wrap > * + * {
   margin-top: var(--spacing);
 }
 
@@ -108,7 +113,7 @@ p {
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 13px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -129,8 +134,8 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
   background-color: #eee;
   border-radius: 50%;
 }
@@ -142,7 +147,7 @@ p {
 
 /* When the radio button is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -159,10 +164,16 @@ p {
 
 /* Style the indicator (dot/circle) */
 .container .checkmark:after {
-  top: 9px;
-  left: 9px;
-  width: 8px;
-  height: 8px;
+  top: 4px;
+  left: 4px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: white;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

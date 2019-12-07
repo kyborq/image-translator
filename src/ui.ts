@@ -40,7 +40,7 @@ function listenMessages() {
 
         // Выполнение экспорта
         case PluginActionTypes.EXPORT:
-          exportZip("png", payload.exportableBytes).then((content) => {
+          exportZip(payload.format, payload.exportableBytes).then((content) => {
             const date = new Date();
             const hours = date.getHours();
             const minutes = date.getMinutes();
@@ -74,10 +74,17 @@ function listenMessages() {
 function listenButtons() {
   document.addEventListener("click", function (event: MouseEvent) {
     const target = event.target as HTMLElement;
+    const formatRadio = document.querySelector(
+      "input[name='export-type']:checked"
+    ) as HTMLInputElement;
+    const format = formatRadio.value;
+
+    // console.log(format);
+
     switch (target.id) {
       // Клик на кнопку Экспорт
       case "saveBtn":
-        sendMessage({ type: UIActionTypes.EXPORT });
+        sendMessage({ type: UIActionTypes.EXPORT, payload: format });
         break;
     }
   });
