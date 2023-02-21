@@ -47,7 +47,10 @@ export async function exportZip(format: string, exportableBytes: Export[]) {
     const ext = exportTypeToFileExtension(format);
 
     let blob = new Blob([cleanBytes], { type: bType });
-    zip.file(`${name}${ext}`, blob, {
+    zip.file(`android/${name}${ext}`, blob, {
+      base64: true,
+    });
+    zip.file(`ios/${name}${ext}`, blob, {
       base64: true,
     });
   }

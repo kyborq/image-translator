@@ -55,7 +55,10 @@ function processResult(
       });
     });
 
-    translated[clonedFrame.id] = clonedFrame;
+    translated[clonedFrame.id] = {
+      frame: clonedFrame,
+      language
+    };
   }
 }
 
@@ -89,8 +92,8 @@ async function startExport(format: string) {
     const key = keys[i];
     const current = translated[key];
 
-    if (current.exportSettings.length === 0) {
-      current.exportSettings = [
+    if (current.frame.exportSettings.length === 0) {
+      current.frame.exportSettings = [
         {
           format: format.toUpperCase() as TExport,
           suffix: "",
@@ -100,11 +103,11 @@ async function startExport(format: string) {
       ];
     }
 
-    for (let setting of current.exportSettings) {
+    for (let setting of current.frame.exportSettings) {
       let defaultSetting = setting;
-      const bytes = await current.exportAsync(defaultSetting);
+      const bytes = await current.frame.exportAsync(defaultSetting);
       exportableBytes.push({
-        name: current.name,
+        name: `${current.language}/${current.frame.name}`,
         setting,
         bytes,
       });

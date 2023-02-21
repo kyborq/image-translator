@@ -14,8 +14,13 @@ export interface IIterableNode {
   [key: string]: IFrameNode;
 }
 
+export type ITranslated = {
+  frame: FrameNode;
+  language: string;
+}
+
 export interface IIterableFrame {
-  [key: string]: FrameNode;
+  [key: string]: ITranslated;
 }
 
 export const getTextNodes = () => {
