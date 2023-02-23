@@ -1,4 +1,4 @@
-import { languages, languagesKeys } from "./lib/languages";
+import { LANGUAGES, LANGUAGES_ANDROID } from "./lib/languages";
 import {
   getTextNodes,
   getTopNodes,
@@ -15,6 +15,9 @@ import {
 figma.showUI(__html__, { width: 300, height: 158 });
 
 const translated: IIterableFrame = {};
+
+let languages = LANGUAGES_ANDROID;
+let languagesKeys = Object.keys(languages);
 
 export function postMessage({ type, payload }: PluginAction): void {
   figma.ui.postMessage({ type, payload });
@@ -57,7 +60,7 @@ function processResult(
 
     translated[clonedFrame.id] = {
       frame: clonedFrame,
-      language
+      language,
     };
   }
 }
@@ -106,11 +109,27 @@ async function startExport(format: string) {
     for (let setting of current.frame.exportSettings) {
       let defaultSetting = setting;
       const bytes = await current.frame.exportAsync(defaultSetting);
-      exportableBytes.push({
-        name: `${current.language}/${current.frame.name}`,
-        setting,
-        bytes,
-      });
+      if (
+        format === "jpg" &&
+        Object.keys(LANGUAGES).includes(current.language)
+      ) {
+        exportableBytes.push({
+          name: `${current.language}/${current.frame.name}`,
+          setting,
+          bytes,
+        });
+      }
+
+      if (
+        format === "png" &&
+        Object.keys(LANGUAGES_ANDROID).includes(current.language)
+      ) {
+        exportableBytes.push({
+          name: `${current.language}/${current.frame.name}`,
+          setting,
+          bytes,
+        });
+      }
     }
   }
 
@@ -131,6 +150,10 @@ figma.ui.onmessage = function ({ type, payload }: UIAction): void {
         payload.language,
         payload.text
       );
+      break;
+
+    case UIActionTypes.CHANGE_FORMAT:
+      // ...
       break;
 
     case UIActionTypes.EXPORT:

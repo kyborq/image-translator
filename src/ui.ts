@@ -83,6 +83,10 @@ function listenButtons() {
 
     switch (target.id) {
       // Клик на кнопку Экспорт
+      case "jpg":
+      case "png":
+        sendMessage({ type: UIActionTypes.CHANGE_FORMAT, payload: format });
+        break;
       case "saveBtn":
         sendMessage({ type: UIActionTypes.EXPORT, payload: format });
         break;

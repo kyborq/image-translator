@@ -2,6 +2,7 @@ export enum UIActionTypes {
   EXPORT = "EXPORT",
   TRANSLATE = "TRANSLATE",
   CLOSE = "CLOSE",
+  CHANGE_FORMAT = "CHANGE_FORMAT",
 }
 
 export interface UIAction {

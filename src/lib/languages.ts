@@ -2,7 +2,7 @@ export interface ILanguage {
   [key: string]: string;
 }
 
-export const languages: ILanguage = {
+export const LANGUAGES: ILanguage = {
   en: "English",
   ar: "Arabic",
   hu: "Hungarian",
@@ -37,4 +37,44 @@ export const languages: ILanguage = {
   ja: "Japanese",
 };
 
-export const languagesKeys = Object.keys(languages);
+export const LANGUAGES_ANDROID: ILanguage = {
+  en: "English",
+  ar: "Arabic",
+  hu: "Hungarian",
+  vi: "Vietnamese",
+  el: "Greek",
+  da: "Danish",
+  iw: "Hebrew",
+  id: "Indonesian",
+  is: "Icelandic",
+  es: "Spanish",
+  it: "Italian",
+  ca: "Catalan",
+  zh: "Chinese",
+  ko: "Korean",
+  lv: "Latvian",
+  lt: "Lithuanian",
+  ms: "Malay",
+  de: "German",
+  nl: "Dutch",
+  no: "Norwegian",
+  pl: "Polish",
+  pt: "Portuguese",
+  ro: "Romanian",
+  ru: "Russian",
+  sk: "Slovak",
+  sl: "Slovenian",
+  th: "Thai",
+  tr: "Turkish",
+  uk: "Ukrainian",
+  fi: "Finnish",
+  fr: "French",
+  hi: "Hindi",
+  hr: "Croatian",
+  cs: "Czech",
+  sv: "Swedish",
+  et: "Estonian",
+  ja: "Japanese",
+};
+
+// export const languagesKeys = Object.keys(languages);
