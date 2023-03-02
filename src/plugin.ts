@@ -106,6 +106,8 @@ async function startExport(format: string) {
       ];
     }
 
+    // console.log(current.frame.name, current.frame.name.replace("/", " "));
+
     for (let setting of current.frame.exportSettings) {
       let defaultSetting = setting;
       const bytes = await current.frame.exportAsync(defaultSetting);
@@ -113,8 +115,9 @@ async function startExport(format: string) {
         format === "jpg" &&
         Object.keys(LANGUAGES).includes(current.language)
       ) {
+        const formName = current.frame.name.replace("/", " ");
         exportableBytes.push({
-          name: `${current.language}/${current.frame.name}`,
+          name: `${current.language}/${formName}`,
           setting,
           bytes,
         });
@@ -124,8 +127,9 @@ async function startExport(format: string) {
         format === "png" &&
         Object.keys(LANGUAGES_ANDROID).includes(current.language)
       ) {
+        const formName = current.frame.name.replace("/", " ");
         exportableBytes.push({
-          name: `${current.language}/${current.frame.name}`,
+          name: `${current.language}/${formName}`,
           setting,
           bytes,
         });
