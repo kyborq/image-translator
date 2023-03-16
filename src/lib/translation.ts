@@ -17,7 +17,7 @@ export interface IIterableNode {
 export type ITranslated = {
   frame: FrameNode;
   language: string;
-}
+};
 
 export interface IIterableFrame {
   [key: string]: ITranslated;

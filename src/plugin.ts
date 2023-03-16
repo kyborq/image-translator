@@ -106,14 +106,17 @@ async function startExport(format: string) {
       ];
     }
 
-    // console.log(current.frame.name, current.frame.name.replace("/", " "));
+    const selection = figma.currentPage.selection.map((n) => n.id);
+    const isSelected = selection.length > 0;
+    // console.log("selected:", selection);
 
     for (let setting of current.frame.exportSettings) {
       let defaultSetting = setting;
       const bytes = await current.frame.exportAsync(defaultSetting);
       if (
         format === "jpg" &&
-        Object.keys(LANGUAGES).includes(current.language)
+        Object.keys(LANGUAGES).includes(current.language) &&
+        ((isSelected && selection.includes(current.frame.id)) || !isSelected)
       ) {
         const formName = current.frame.name.replace("/", " ");
         exportableBytes.push({
@@ -123,9 +126,12 @@ async function startExport(format: string) {
         });
       }
 
+      // selection.includes(current.frame.id)
+
       if (
         format === "png" &&
-        Object.keys(LANGUAGES_ANDROID).includes(current.language)
+        Object.keys(LANGUAGES_ANDROID).includes(current.language) &&
+        ((isSelected && selection.includes(current.frame.id)) || !isSelected)
       ) {
         const formName = current.frame.name.replace("/", " ");
         exportableBytes.push({
@@ -136,6 +142,8 @@ async function startExport(format: string) {
       }
     }
   }
+
+  console.log("exporting...", exportableBytes);
 
   postMessage({
     type: PluginActionTypes.EXPORT,
