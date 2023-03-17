@@ -1,5 +1,5 @@
-import { exportZip } from "./services/export";
-import { translate } from "./services/translate";
+import { exportZip } from "./api/export-api";
+import { translate } from "./api/translate-api";
 import {
   PluginAction,
   PluginActionTypes,
