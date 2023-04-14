@@ -1,24 +1,27 @@
 <main class="wrap">
-  <div class="form">
-    <label class="container"
-      >PNG
-      <input
-        type="radio"
-        id="png"
-        name="export-type"
-        value="png"
-        checked="true"
-      />
+  <div class="format-container">
+    <label class="container">
+      PNG
+      <input value="PNG" type="radio" name="export-type" checked="true" />
       <span class="checkmark"></span>
     </label>
-    <label class="container"
-      >JPG
-      <input type="radio" id="jpg" name="export-type" value="jpg" />
+    <label class="container">
+      JPG
+      <input value="JPG" type="radio" name="export-type" />
       <span class="checkmark"></span>
     </label>
   </div>
-
-  <button id="saveBtn" class="button button--primary" type="button">
-    Export to ZIP
-  </button>
+  <div class="format-container">
+    <div class="progress">
+      <span class="progressbar" id="progress-bar"></span>
+    </div>
+  </div>
+  <div class="button-container">
+    <button id="translate-button" class="button button--primary" type="button">
+      Translate
+    </button>
+    <button id="export-button" class="button button--primary" type="button">
+      Export to ZIP
+    </button>
+  </div>
 </main>

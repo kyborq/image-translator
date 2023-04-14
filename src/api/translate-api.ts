@@ -2,7 +2,7 @@ const API_URL = "https://appcake.work/api/translator/translate_text";
 const TOKEN =
   "1535fa30d7e25dd8a49f1536779734ec8286108d115da5045d77f3b4185d8f790";
 
-export async function translate(text: string, language: string) {
+export async function translateFrame(text: string, language: string) {
   const headers = new Headers({
     "Content-Type": "application/x-www-form-urlencoded",
   });

@@ -1,5 +1,6 @@
-import { exportZip } from "./api/export-api";
-import { translate } from "./api/translate-api";
+import { format } from "date-fns";
+import { saveFramesAsZip } from "./api/export-api";
+import { translateFrame } from "./api/translate-api";
 import {
   PluginAction,
   PluginActionTypes,
@@ -22,49 +23,58 @@ function listenMessages() {
     if (!!pluginMessage?.type) {
       const { type, payload } = pluginMessage;
 
-      switch (type) {
-        // Выполнение перевода
-        case PluginActionTypes.TRANSLATE:
-          translate(payload.text, payload.language).then((result) => {
-            const text = result[payload.language][0];
-            const language = payload.language;
-            const node = payload.node;
-            const original = payload.text;
+      if (type === PluginActionTypes.START_EXPORT) {
+        const progressElement = document.querySelector(
+          "#progress-bar"
+        ) as HTMLSpanElement;
+        progressElement.style.width = "0%";
 
-            sendMessage({
-              type: UIActionTypes.TRANSLATE,
-              payload: { text, original, language, node },
-            });
+        const dateTime = new Date();
+        const formatDate = format(dateTime, "HH_mm_ss dd.MM.yyyy");
+        saveFramesAsZip(
+          payload,
+          `ImageTranslator - ${formatDate}.zip`,
+          (progress) => {
+            progressElement.style.width = progress;
+          }
+        ).then(() => {
+          console.log("Saved-ZIP");
+        });
+      }
+
+      if (type === PluginActionTypes.START_TRANSLATE) {
+        translateFrame(payload.text, payload.language).then((result) => {
+          const text = result[payload.language][0];
+          const language = payload.language;
+          const node = payload.node;
+          const original = payload.text;
+          const count = payload.count;
+
+          // console.log("Translated", original, text);
+
+          const progressElement = document.querySelector(
+            "#progress-bar"
+          ) as HTMLSpanElement;
+          progressElement.style.width = "0%";
+
+          sendMessage({
+            type: UIActionTypes.RESULT_TRANSLATE,
+            payload: { text, original, language, node, count },
           });
-          break;
+        });
+      }
 
-        // Выполнение экспорта
-        case PluginActionTypes.EXPORT:
-          exportZip(payload.format, payload.exportableBytes).then((content) => {
-            const date = new Date();
-            const hours = date.getHours();
-            const minutes = date.getMinutes();
-            const seconds = date.getSeconds();
-            const day = date.getDate();
-            const month = date.getMonth();
-            const year = date.getFullYear();
+      if (type === PluginActionTypes.PROGRESS_TRANSLATE) {
+        console.log(`Translated ${payload.translated} / ${payload.all}`);
+      }
 
-            const blobURL = window.URL.createObjectURL(content);
-            const link = document.createElement("a");
-            link.className = "button button--primary";
-            link.href = blobURL;
-            link.download = "export.zip";
-            link.setAttribute(
-              "download",
-              `export-${day}.${
-                month + 1
-              }.${year}-${hours}:${minutes}:${seconds}.zip`
-            );
-            link.click();
-
-            sendMessage({ type: UIActionTypes.CLOSE });
-          });
-          break;
+      if (type === PluginActionTypes.PROGRESS_EXPORT) {
+        console.log(`Exported ${payload.index} / ${payload.count}`);
+        const btn = document.querySelector(
+          "#export-button"
+        ) as HTMLButtonElement;
+        btn.classList.remove("disabled");
+        btn.disabled = false;
       }
     }
   };
@@ -79,17 +89,15 @@ function listenButtons() {
     ) as HTMLInputElement;
     const format = formatRadio.value;
 
-    // console.log(format);
+    if (target.id === "export-button") {
+      const btn = target as HTMLButtonElement;
+      btn.disabled = true;
+      btn.classList.add("disabled");
+      sendMessage({ type: UIActionTypes.INIT_EXPORT, payload: format });
+    }
 
-    switch (target.id) {
-      // Клик на кнопку Экспорт
-      case "jpg":
-      case "png":
-        sendMessage({ type: UIActionTypes.CHANGE_FORMAT, payload: format });
-        break;
-      case "saveBtn":
-        sendMessage({ type: UIActionTypes.EXPORT, payload: format });
-        break;
+    if (target.id === "translate-button") {
+      sendMessage({ type: UIActionTypes.INIT_TRANSLATE });
     }
   });
 }

@@ -9,7 +9,9 @@
   },
   "devDependencies": {
     "@types/figma": "^1.0.4",
+    "@types/file-saver": "^2.0.5",
     "@types/node": "^16.10.2",
+    "@types/pako": "^2.0.0",
     "css-loader": "^6.3.0",
     "html-inline-script-webpack-plugin": "^2.0.2",
     "html-webpack-plugin": "^5.3.2",
@@ -21,6 +23,16 @@
     "typescript": "^4.4.3",
     "url-loader": "^4.1.1",
     "webpack": "^5.56.0",
-    "webpack-cli": "^4.8.0"
+    "webpack-cli": "^4.8.0",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "dependencies": {
+    "date-fns": "^2.29.3",
+    "file-saver": "^2.0.5",
+    "image-compressor": "^2.0.3",
+    "imager-io": "^0.1.2",
+    "pako": "^2.1.0",
+    "sharp": "^0.32.0",
+    "zlib": "^1.0.5"
   }
 }

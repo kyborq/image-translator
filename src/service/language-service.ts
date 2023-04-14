@@ -1,9 +1,12 @@
-// Здесь все то, что связанно с языками
-
 export interface ILanguage {
   [key: string]: string;
 }
 
+export interface IFormatLanguage {
+  [key: string]: ILanguage;
+}
+
+// Для перевода на IOS устройств
 export const BASE_LANGUAGES: ILanguage = {
   en: "English",
   ar: "Arabic",
@@ -23,7 +26,7 @@ export const BASE_LANGUAGES: ILanguage = {
   nl: "Dutch",
   no: "Norwegian",
   pl: "Polish",
-  pt: "Portuguese ",
+  pt: "Portuguese",
   ro: "Romanian",
   ru: "Russian",
   sk: "Slovak",
@@ -39,10 +42,28 @@ export const BASE_LANGUAGES: ILanguage = {
   ja: "Japanese",
 };
 
-export const ADDITIONAL_LANGUAGES: ILanguage = {
+// Для перевода для Android устройств
+export const MORE_LANGUAGES: ILanguage = {
   is: "Icelandic",
   lv: "Latvian",
   lt: "Lithuanian",
   sl: "Slovenian",
   et: "Estonian",
+};
+
+export const LANGUAGES: ILanguage = {
+  ...BASE_LANGUAGES,
+  ...MORE_LANGUAGES,
+};
+
+// JPG - iOS
+// PNG - Android
+export const FORMAT_LANGUAGES: IFormatLanguage = {
+  JPG: BASE_LANGUAGES,
+  PNG: LANGUAGES,
+};
+
+export const DEVICE: ILanguage = {
+  JPG: "ios",
+  PNG: "android",
 };
