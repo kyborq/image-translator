@@ -22,7 +22,7 @@ export async function processTranslated(
   const index = languages.indexOf(language) + 1;
 
   clonedFrame.y += clonedFrame.height * index + 200 * index;
-  clonedFrame.name = `${currentFrame.name} - ${LANGUAGES[language]}`;
+  clonedFrame.name = `${LANGUAGES[language]} - ${currentFrame.name}`;
 
   const nodeTexts = clonedFrame.findAll((element) => element.type === "TEXT");
 
