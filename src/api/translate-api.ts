@@ -1,4 +1,4 @@
-const API_URL = "https://appcake.work/api/translator/translate_text";
+const API_URL = "http://65.21.72.156/api/translator/translate_text";
 const TOKEN =
   "1535fa30d7e25dd8a49f1536779734ec8286108d115da5045d77f3b4185d8f790";
 
