@@ -24,7 +24,11 @@ export async function translateFrame(text: string, language: string) {
     redirect: "follow",
   };
 
-  const response = await fetch(API_URL, requestOptions);
-  const result = await response.json();
-  return result;
+  try {
+    const response = await fetch(API_URL, requestOptions);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 }
