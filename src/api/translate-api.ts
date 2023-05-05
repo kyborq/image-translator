@@ -19,6 +19,7 @@ export async function translateFrame(text: string, language: string) {
 
   const requestOptions: RequestInit = {
     method: "POST",
+    mode: "cors",
     headers,
     body,
     redirect: "follow",
