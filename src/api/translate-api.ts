@@ -7,9 +7,15 @@ export async function translateFrame(text: string, language: string) {
     "Content-Type": "application/x-www-form-urlencoded",
   });
 
-  const body = new URLSearchParams(
-    `text=${text}&token=${TOKEN}&fromLang=auto&toLangs=${language}`
-  );
+  const body = new URLSearchParams();
+    
+  // OLD in URLSearchParams constructor!
+  // `text=${text}&token=${TOKEN}&fromLang=auto&toLangs=${language}`
+  
+  body.append("text", text);
+  body.append("token", TOKEN);
+  body.append("fromLang", "auto");
+  body.append("toLangs", language);
 
   const requestOptions: RequestInit = {
     method: "POST",
