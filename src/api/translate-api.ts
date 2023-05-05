@@ -26,9 +26,10 @@ export async function translateFrame(text: string, language: string) {
 
   try {
     const response = await fetch(API_URL, requestOptions);
+    console.log(await response.text())
     const result = await response.json();
     return result;
   } catch (error) {
-    console.error(error);
+    console.error("Dattebayo!!!", error);
   }
 }
