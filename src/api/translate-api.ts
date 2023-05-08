@@ -1,5 +1,5 @@
-const PROXY_URL = "https://cors-anywhere.herokuapp.com/"
-const API_URL = "http://65.21.72.156/api/translator/translate_text";
+const BASE_URL = "https://helpdev.info/"
+const API_URL = BASE_URL + "api/translator/translate_text";
 const TOKEN =
   "1535fa30d7e25dd8a49f1536779734ec8286108d115da5045d77f3b4185d8f790";
 
@@ -27,7 +27,7 @@ export async function translateFrame(text: string, language: string) {
   };
 
   try {
-    const response = await fetch(PROXY_URL + API_URL, requestOptions);
+    const response = await fetch(API_URL, requestOptions);
     const result = await response.json();
     return result;
   } catch (error) {
